@@ -5,16 +5,17 @@ VoiceManager
 2.实现播放功能，播放实现帧动画
 
 用法：  
+
       1.录音  
       VoiceManage mVoiceManage  =VoiceManager.getInstance(mContext);
       
-      //暂停或继续
+     //暂停或继续
       mVoiceManage.pauseOrStartVoiceRecord();
      
      //完成录音
-      mVoiceManage.stopVoiceRecord();
+     mVoiceManage.stopVoiceRecord();
       
-      mVoiceManage.setVoiceRecordListener(new VoiceManager.VoiceRecordCallBack() {
+     mVoiceManage.setVoiceRecordListener(new VoiceManager.VoiceRecordCallBack() {
             @Override
             public void recDoing(long time, String strTime) {
                 mRecordHintTv.setText(strTime);
@@ -48,7 +49,6 @@ VoiceManager
 	
 	2.播放
 	VoiceManage mVoiceManage  =VoiceManager.getInstance(mContext);
-	
 	mVoiceManage.setVoicePlayListener(new VoiceManager.VoicePlayCallBack() {
                         @Override
                         public void voiceTotalLength(long time, String strTime) {
@@ -57,6 +57,7 @@ VoiceManager
 
                         @Override
                         public void playDoing(long time, String strTime) {
+
 
                         }
 
@@ -81,7 +82,11 @@ VoiceManager
         mVoiceManage.startPlay(voice.getFilePath());
       
 <img src="https://github.com/jaydenxiao2016/VoiceManager/blob/master/art/Screenshot_2017-03-21-17-28-01.png" width=480 />
+
+
 <img src="https://github.com/jaydenxiao2016/VoiceManager/blob/master/art/Screenshot_2017-03-21-17-28-05.png" width=480 />
+
+
 <img src="https://github.com/jaydenxiao2016/VoiceManager/blob/master/art/Screenshot_2017-03-21-17-28-26.png" width=480 />
 
 License
