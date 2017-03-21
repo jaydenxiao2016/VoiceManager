@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:voiceView="http://schemas.android.com/apk/res-auto"
+    style="@style/record_voice_dialog"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_gravity="center_vertical|center_horizontal"
+    android:orientation="vertical">
+
+    <RelativeLayout
+        android:layout_width="220dp"
+        android:background="@drawable/round_selector"
+        android:layout_height="220dp">
+        <com.jaydenxiao.voicemanager.VoiceLineView
+            android:id="@+id/voicLine"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@color/transparent"
+            android:layout_above="@+id/iv_voice"
+            voiceView:maxVolume="100"
+            voiceView:middleLine="@color/white"
+            voiceView:middleLineHeight="1dp"
+            voiceView:fineness="three"
+            voiceView:rectSpace="2dp"
+            voiceView:rectWidth="5dp"
+            voiceView:sensibility="five"
+            voiceView:viewMode="line"
+            voiceView:lineSpeed="90"
+            voiceView:voiceLine="@color/white" />
+
+        <ImageView
+            android:id="@+id/iv_voice"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:background="@color/transparent"
+            android:src="@drawable/icon_voice_record" />
+
+        <TextView
+            android:id="@+id/tv_length"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:layout_gravity="bottom|center_horizontal"
+            android:layout_alignParentBottom="true"
+            android:layout_marginBottom="25dp"
+            android:text="00:00:00"
+            android:textColor="#FFFFFF"
+            android:textSize="14sp" />
+
+        <ImageView
+            android:id="@+id/iv_complete"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:layout_alignParentBottom="true"
+            android:layout_alignParentRight="true"
+            android:layout_margin="20dp"
+            android:src="@drawable/icon_complete" />
+
+        <ImageView
+            android:id="@+id/iv_continue_or_pause"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:src="@drawable/icon_pause"
+            android:layout_margin="20dp"
+            android:layout_alignParentBottom="true" />
+    </RelativeLayout>
+
+</LinearLayout>
