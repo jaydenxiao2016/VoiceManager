@@ -7,8 +7,9 @@ VoiceManager
 用法：  
 
       1.录音  
+      
       VoiceManage mVoiceManage  =VoiceManager.getInstance(mContext);
-    
+      
       mVoiceManage.pauseOrStartVoiceRecord();//暂停或继续
      
       mVoiceManage.stopVoiceRecord();//完成录音
