@@ -8,9 +8,11 @@ VoiceManager
       1.录音  
       VoiceManage mVoiceManage  =VoiceManager.getInstance(mContext);
       
-      mVoiceManage.pauseOrStartVoiceRecord();//暂停或继续
+      //暂停或继续
+      mVoiceManage.pauseOrStartVoiceRecord();
      
-      mVoiceManage.stopVoiceRecord();//完成录音
+     //完成录音
+      mVoiceManage.stopVoiceRecord();
       
       mVoiceManage.setVoiceRecordListener(new VoiceManager.VoiceRecordCallBack() {
             @Override
@@ -79,9 +81,7 @@ VoiceManager
         mVoiceManage.startPlay(voice.getFilePath());
       
 <img src="https://github.com/jaydenxiao2016/VoiceManager/blob/master/art/Screenshot_2017-03-21-17-28-01.png" width=480 />
-
 <img src="https://github.com/jaydenxiao2016/VoiceManager/blob/master/art/Screenshot_2017-03-21-17-28-05.png" width=480 />
-
 <img src="https://github.com/jaydenxiao2016/VoiceManager/blob/master/art/Screenshot_2017-03-21-17-28-26.png" width=480 />
 
 License
@@ -89,7 +89,7 @@ License
 
     The MIT License (MIT)
 
-	Copyright (c) 2015 youzehong
+	Copyright (c) 2017 jaydenxiao2016
 
 	Permission is hereby granted, free of charge, to any person obtaining a copy
 	of this software and associated documentation files (the "Software"), to deal
