@@ -8,14 +8,12 @@ VoiceManager
 
       1.录音  
       VoiceManage mVoiceManage  =VoiceManager.getInstance(mContext);
-      
-     //暂停或继续
-      mVoiceManage.pauseOrStartVoiceRecord();
-     
-     //完成录音
-     mVoiceManage.stopVoiceRecord();
+    
+      mVoiceManage.pauseOrStartVoiceRecord();//暂停或继续
+     
+      mVoiceManage.stopVoiceRecord();//完成录音
       
-     mVoiceManage.setVoiceRecordListener(new VoiceManager.VoiceRecordCallBack() {
+      mVoiceManage.setVoiceRecordListener(new VoiceManager.VoiceRecordCallBack() {
             @Override
             public void recDoing(long time, String strTime) {
                 mRecordHintTv.setText(strTime);
