@@ -1,22 +1,76 @@
 VoiceManager
 ============
-1.实现了录音，播放；<br/>
-2.暂停录音开始录音，合并为同一个；<br/>
-3.显示录音时间，录了多少秒，时分秒；<br/>
-4.代码总布局已经写好，可以自己修改；<br/>
+1.实现录音功能，提供暂停、继续切换，并且监听音量大小以波浪线呈现出现
+2.实现播放功能，播放实现帧动画
+用法：  
+      1.录音  
+      VoiceManage mVoiceManage  =VoiceManager.getInstance(mContext);
+      mVoiceManage.pauseOrStartVoiceRecord();//暂停或继续
+      mVoiceManage.stopVoiceRecord();//完成录音
+      mVoiceManage.setVoiceRecordListener(new VoiceManager.VoiceRecordCallBack() {
+            @Override
+            public void recDoing(long time, String strTime) {
+                mRecordHintTv.setText(strTime);
+            }
 
-用法：  
-        
-      VoiceManage mVoiceManage = new VoiceManage(mActivity, path);//初始化  
+            @Override
+            public void recVoiceGrade(int grade) {
+                voicLine.setVolume(grade);
+            }
 
-      mVoiceManage.sessionRecord(true);// 开始录音  
-      
-      mVoiceManage.sessionPlay(true, mFilePath);// 播放录音  
-      
+            @Override
+            public void recStart(boolean init) {
+                mIvPauseContinue.setImageResource(R.drawable.icon_pause);
+                voicLine.setContinue();
+            }
 
-第一个参数为： Activity上下文，<br/>
-第二个参数为：保存录音文件的路径，一般都是包名+自定义文件名<br/>
+            @Override
+            public void recPause(String str) {
+                mIvPauseContinue.setImageResource(R.drawable.icon_continue);
+                voicLine.setPause();
+            }
 
+
+            @Override
+            public void recFinish(long length, String strLength, String path) {
+                if (enRecordVoiceListener != null) {
+                    enRecordVoiceListener.onFinishRecord(length, strLength, path);
+                }
+            }
+        });
+	2.播放
+	VoiceManage mVoiceManage  =VoiceManager.getInstance(mContext);
+	mVoiceManage.setVoicePlayListener(new VoiceManager.VoicePlayCallBack() {
+                        @Override
+                        public void voiceTotalLength(long time, String strTime) {
+
+                        }
+
+                        @Override
+                        public void playDoing(long time, String strTime) {
+
+                        }
+
+                        @Override
+                        public void playPause() {
+
+                        }
+
+                        @Override
+                        public void playStart() {
+
+                        }
+
+                        @Override
+                        public void playFinish() {
+                            if (voiceAnimation != null) {
+                                voiceAnimation.stop();
+                                voiceAnimation.selectDrawable(0);
+                            }
+                        }
+                    });
+        mVoiceManage.startPlay(voice.getFilePath());
+      
 <img src="https://raw.githubusercontent.com/youmu178/VoiceManager/master/layout-2015-06-16-164124.png" width=480 />
 
 <img src="https://raw.githubusercontent.com/youmu178/VoiceManager/master/layout-2015-06-16-164223.png" width=480 />
