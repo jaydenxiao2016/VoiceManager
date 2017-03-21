@@ -1,12 +1,17 @@
 VoiceManager
 ============
 1.实现录音功能，提供暂停、继续切换，并且监听音量大小以波浪线呈现出现
+
 2.实现播放功能，播放实现帧动画
+
 用法：  
       1.录音  
       VoiceManage mVoiceManage  =VoiceManager.getInstance(mContext);
-      mVoiceManage.pauseOrStartVoiceRecord();//暂停或继续
-      mVoiceManage.stopVoiceRecord();//完成录音
+      
+      mVoiceManage.pauseOrStartVoiceRecord();//暂停或继续
+     
+      mVoiceManage.stopVoiceRecord();//完成录音
+      
       mVoiceManage.setVoiceRecordListener(new VoiceManager.VoiceRecordCallBack() {
             @Override
             public void recDoing(long time, String strTime) {
@@ -38,8 +43,10 @@ VoiceManager
                 }
             }
         });
+	
 	2.播放
 	VoiceManage mVoiceManage  =VoiceManager.getInstance(mContext);
+	
 	mVoiceManage.setVoicePlayListener(new VoiceManager.VoicePlayCallBack() {
                         @Override
                         public void voiceTotalLength(long time, String strTime) {
@@ -71,9 +78,11 @@ VoiceManager
                     });
         mVoiceManage.startPlay(voice.getFilePath());
       
-<img src="https://raw.githubusercontent.com/youmu178/VoiceManager/master/layout-2015-06-16-164124.png" width=480 />
+<img src="https://github.com/jaydenxiao2016/VoiceManager/blob/master/art/Screenshot_2017-03-21-17-28-01.png" width=480 />
 
-<img src="https://raw.githubusercontent.com/youmu178/VoiceManager/master/layout-2015-06-16-164223.png" width=480 />
+<img src="https://github.com/jaydenxiao2016/VoiceManager/blob/master/art/Screenshot_2017-03-21-17-28-05.png" width=480 />
+
+<img src="https://github.com/jaydenxiao2016/VoiceManager/blob/master/art/Screenshot_2017-03-21-17-28-26.png" width=480 />
 
 License
 =======
