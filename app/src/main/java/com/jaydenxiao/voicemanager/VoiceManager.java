@@ -25,6 +25,9 @@ import java.util.ArrayList;
  * 创建时间：2017/3/16
  * 最后修改时间：2017/3/16
  */
+/**
+ * 录音管理（包括播放和监听）
+ */
 public class VoiceManager {
 
     private static volatile VoiceManager voiceManager;
@@ -67,24 +70,21 @@ public class VoiceManager {
     private VoiceManager(Context context) {
         this.mContext = context;
     }
-
     /**
      * 获取单例
-     *
      * @param context
      * @return
      */
-    public static VoiceManager getInstance(Context context) {
-        if (voiceManager == null) {
-            synchronized (VoiceManager.class) {
-                if (voiceManager == null) {
+    public static VoiceManager getInstance(Context context){
+        if(voiceManager == null){
+            synchronized(VoiceManager.class){
+                if(voiceManager == null){
                     voiceManager = new VoiceManager(context);
                 }
             }
         }
         return voiceManager;
     }
-
     /**
      * 播放器结束监听
      */
@@ -166,7 +166,7 @@ public class VoiceManager {
      * @param filePath 音频存放文件夹
      */
     public void startVoiceRecord(String filePath) {
-        if (!isSDCardAvailable()) return;
+        if (!isSDCardAvailable()) return ;
         this.recordFilePath = filePath;
         startVoiceRecord(true);
     }
@@ -205,12 +205,13 @@ public class VoiceManager {
                     //完成录音
                     if (voiceRecordCallBack != null) {
                         voiceRecordCallBack.recFinish(mRecTimeSum, String.format("%02d:%02d:%02d",
-                                ts.mSpanHour, ts.mSpanMinute, ts.mSpanSecond), file.getAbsolutePath());
+                                ts.mSpanHour, ts.mSpanMinute, ts.mSpanSecond),file.getAbsolutePath());
                     }
                 }
             }
 
         } catch (Exception e) {
+            e.printStackTrace();
         }
     }
 
@@ -226,7 +227,7 @@ public class VoiceManager {
             cleanFieArrayList(mRecList);
         }
         //录音前停止播放回调
-        if (voicePlayCallBack != null) {
+        if(voicePlayCallBack!=null){
             voicePlayCallBack.playFinish();
         }
         stopRecorder(mMediaRecorder, true);
@@ -260,7 +261,6 @@ public class VoiceManager {
         public void exit() {
             running = false;
         }
-
         @Override
         public void run() {
             while (running) {
@@ -273,15 +273,15 @@ public class VoiceManager {
                     break;
                 }
                 try {
-                    final double ratio = mMediaRecorder.getMaxAmplitude() / 150;
-                    if (ratio != 0 && voiceRecordCallBack != null) {
-                        ((Activity) mContext).runOnUiThread(new Runnable() {
+                    final double ratio = mMediaRecorder.getMaxAmplitude()/150;
+                    if (ratio != 0&&voiceRecordCallBack!=null) {
+                        ((Activity)mContext).runOnUiThread(new Runnable() {
                             @Override
                             public void run() {
-                                double db = 0;// 分贝
+                                double db=0;// 分贝
                                 if (ratio > 1)
                                     db = (int) (20 * Math.log10(ratio));
-                                voiceRecordCallBack.recVoiceGrade((int) db);
+                                voiceRecordCallBack.recVoiceGrade((int)db);
                             }
                         });
                     }
@@ -302,19 +302,11 @@ public class VoiceManager {
      */
     private File getOutputVoiceFile(ArrayList<File> list) {
         String mMinute1 = VoiceTimeUtils.getTime();
-        String recFilePath = recAudioPath(recordFilePath);
-        File recDirFile = recAudioDir(recFilePath);
+        File recDirFile = recAudioDir(recordFilePath);
 
         // 创建音频文件,合并的文件放这里
         File resFile = new File(recDirFile, mMinute1 + ".amr");
         FileOutputStream fileOutputStream = null;
-
-        if (!resFile.exists()) {
-            try {
-                resFile.createNewFile();
-            } catch (IOException e) {
-            }
-        }
         try {
             fileOutputStream = new FileOutputStream(resFile);
         } catch (IOException e) {
@@ -349,6 +341,7 @@ public class VoiceManager {
         try {
             fileOutputStream.close();
         } catch (IOException e) {
+            e.printStackTrace();
         }
 
         return resFile;
@@ -427,11 +420,18 @@ public class VoiceManager {
      * @param filePath 音频存放文件夹
      */
     public void startPlay(String filePath) {
-        if (TextUtils.isEmpty(filePath)) return;
-        playFilePath = filePath;
-        startPlay(true);
+        if (TextUtils.isEmpty(filePath)|| new File(filePath).exists())
+        {
+            if (voicePlayCallBack != null) {
+                voicePlayCallBack.playFinish();
+            }
+            Toast.makeText(mContext,"文件不存在",Toast.LENGTH_SHORT).show();
+            return;
+        }else {
+            playFilePath = filePath;
+            startPlay(true);
+        }
     }
-
     /**
      * 开始播放（内部调）
      *
@@ -518,10 +518,9 @@ public class VoiceManager {
 
     /**
      * 是否在播放中
-     *
      * @return
      */
-    public boolean isPlaying() {
+    public boolean isPlaying(){
         return mDeviceState == MEDIA_STATE_PLAY_DOING;
     }
 
@@ -648,14 +647,14 @@ public class VoiceManager {
                 }
                 result = true;
             }
-            if (mThread != null) {
+            if(mThread!=null){
                 mThread.exit();
-                mThread = null;
+                mThread=null;
             }
         } catch (Exception e) {
-            if (mThread != null) {
+            if(mThread!=null){
                 mThread.exit();
-                mThread = null;
+                mThread=null;
             }
         }
         return result;
@@ -673,7 +672,7 @@ public class VoiceManager {
         File recFile = null;
         if (mr == null) return null;
         try {
-            String path = recAudioPath(recordFilePath);
+            String path = recAudioDir(recordFilePath).getAbsolutePath();
             recFile = new File(path, VoiceTimeUtils.getTime() + ".amr");
             mr.setAudioSource(MediaRecorder.AudioSource.MIC);
             mr.setOutputFormat(MediaRecorder.OutputFormat.RAW_AMR);
@@ -688,6 +687,7 @@ public class VoiceManager {
                 }
             }
         } catch (Exception e) {
+            e.printStackTrace();
         }
         return recFile;
     }
@@ -695,7 +695,7 @@ public class VoiceManager {
     /**
      * 停止录音和播放
      */
-    public void stopRecordAndPlay() {
+    public void stopRecordAndPlay(){
         stopRecorder(mMediaRecorder, true);
         mMediaRecorder = null;
         stopMedia(mMediaPlayer, true);
@@ -708,10 +708,8 @@ public class VoiceManager {
     public interface VoiceRecordCallBack {
         //录音中
         void recDoing(long time, String strTime);
-
         //录音中的声音频率等级
         void recVoiceGrade(int grade);
-
         //录音开始
         void recStart(boolean init);
 
@@ -754,10 +752,6 @@ public class VoiceManager {
      */
     public static boolean isSDCardAvailable() {
         return Environment.MEDIA_MOUNTED.equals(Environment.getExternalStorageState());
-    }
-
-    public static String recAudioPath(String file) {
-        return new File(file).getAbsolutePath();
     }
 
     public static File recAudioDir(String path) {
