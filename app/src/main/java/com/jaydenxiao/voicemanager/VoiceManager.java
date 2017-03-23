@@ -420,7 +420,7 @@ public class VoiceManager {
      * @param filePath 音频存放文件夹
      */
     public void startPlay(String filePath) {
-        if (TextUtils.isEmpty(filePath)|| new File(filePath).exists())
+        if (TextUtils.isEmpty(filePath)|| !new File(filePath).exists())
         {
             if (voicePlayCallBack != null) {
                 voicePlayCallBack.playFinish();
