@@ -1,0 +1,41 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="zh-CN" dir="ltr">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+	<script type="text/javascript">
+window.onload=function(){
+    getA('div'); 
+};
+function getA(obj)
+{
+     var di = document.getElementsByTagName(obj);
+     for(var i=0;i<di.length;i++)
+     {
+           
+          var len = di[i].children.length;
+          for(var j=0;j<len;j++)
+          {
+               var a = di[i].children[j];
+               
+                
+               if(a.tagName.toLowerCase()==='a')
+               {
+                    a.click();
+               }
+               else
+               { 
+                    getA(a.tagName);
+               }
+               if(di[i].tagName.toLowerCase()===obj) break;
+          }
+     }
+}
+</script>
+</head>
+<body>
+<div>
+    <a href="hisign://gdalims:8888/notice?newId=10011002"></a>
+</div>
+</body>
+</html>
